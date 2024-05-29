@@ -4,6 +4,7 @@ import br.com.dio.desafio.dominio.Dev;
 import br.com.dio.desafio.dominio.Mentoria;
 
 import java.time.LocalDate;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -33,31 +34,46 @@ public class Main {
         bootcamp.getConteudos().add(curso2);
         bootcamp.getConteudos().add(mentoria);
 
-        Dev devCamila = new Dev();
-        devCamila.setNome("Camila");
-        devCamila.inscreverBootcamp(bootcamp);
-        System.out.println("Conteúdos Inscritos Camila:" + devCamila.getConteudosInscritos());
-        devCamila.progredir();
-        devCamila.progredir();
-        System.out.println("-");
-        System.out.println("Conteúdos Inscritos Camila:" + devCamila.getConteudosInscritos());
-        System.out.println("Conteúdos Concluídos Camila:" + devCamila.getConteudosConcluidos());
-        System.out.println("XP:" + devCamila.calcularTotalXp());
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("-------");
+        try {
+            System.out.print("Digite o nome do desenvolvedor: ");
+			String devNome = scanner.nextLine();
 
-        Dev devJoao = new Dev();
-        devJoao.setNome("Joao");
-        devJoao.inscreverBootcamp(bootcamp);
-        System.out.println("Conteúdos Inscritos João:" + devJoao.getConteudosInscritos());
-        devJoao.progredir();
-        devJoao.progredir();
-        devJoao.progredir();
-        System.out.println("-");
-        System.out.println("Conteúdos Inscritos João:" + devJoao.getConteudosInscritos());
-        System.out.println("Conteúdos Concluidos João:" + devJoao.getConteudosConcluidos());
-        System.out.println("XP:" + devJoao.calcularTotalXp());
+            if (devNome == null || devNome.trim().isEmpty()) {
+                throw new DesenvolvedorInvalidoException("Nome obrigatório.");
+            }
 
+            Dev dev = new Dev();
+            dev.setNome(devNome);
+            dev.inscreverBootcamp(bootcamp);
+            System.out.println("Conteúdos Inscritos " + devNome + ":" + dev.getConteudosInscritos());
+            dev.progredir();
+            dev.progredir();
+            System.out.println("-");
+            System.out.println("Conteúdos Inscritos " + devNome + ":" + dev.getConteudosInscritos());
+            System.out.println("Conteúdos Inscritos " + devNome + ":" + dev.getConteudosConcluidos());
+            System.out.println("XP:" + dev.calcularTotalXp());
+
+            System.out.println("-------");
+
+            Dev devJoao = new Dev();
+            devJoao.setNome("Joao");
+            devJoao.inscreverBootcamp(bootcamp);
+            System.out.println("Conteúdos Inscritos João:" + devJoao.getConteudosInscritos());
+            devJoao.progredir();
+            devJoao.progredir();
+            devJoao.progredir();
+            System.out.println("-");
+            System.out.println("Conteúdos Inscritos João:" + devJoao.getConteudosInscritos());
+            System.out.println("Conteúdos Concluidos João:" + devJoao.getConteudosConcluidos());
+            System.out.println("XP:" + devJoao.calcularTotalXp());
+
+        } catch (DesenvolvedorInvalidoException e) {
+            System.out.println("O nome do desenvolvedor é obrigatório!");
+        } finally {
+            scanner.close();
+        }
     }
 
 }
